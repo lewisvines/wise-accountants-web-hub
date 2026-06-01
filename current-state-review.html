@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current State &amp; the Case for Priority — Sage Accountant Web (Confidential)</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="A current-state review of the live Sage accountant web pages for France, Spain and Portugal, and the case for prioritising each redesign. Confidential.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,500;9..144,0,600;9..144,0,700;9..144,1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#00DC82; --green-d:#04B86E; --green-ink:#065C3C; --forest:#0a2e21;
+    --ink:#0F0F10; --slate:#46564e; --slate-2:#6c7a72;
+    --paper:#FFFFFF; --bone:#F7F8F5; --bone-2:#EEF1EB; --line:#E2E7DE; --line-2:#D2DACE;
+    --coral:#E0574E; --coral-bg:#FCEDEB; --cyan:#0E7FA8; --cyan-bg:#E7F4FA;
+    --violet:#6A4FB0; --violet-bg:#F0ECFA; --amber:#B07A12; --amber-bg:#FBF3E2;
+    --green-bg:#EAF8F0;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',Arial,sans-serif;color:var(--ink);background:var(--bone);line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 30px}
+
+  header{background:var(--forest);color:#EAF3EE;padding:60px 0 52px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 88% -10%,rgba(0,220,130,.22),transparent 50%)}
+  header .wrap{position:relative}
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:20px}
+  .kicker::before{content:"";width:28px;height:1px;background:var(--green)}
+  header h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.02em;max-width:19ch}
+  header h1 em{font-style:italic;color:var(--green)}
+  header p{margin-top:20px;max-width:64ch;font-size:17px;color:#BFD3C8}
+  .hmeta{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+  .hmeta span{font-size:11.5px;letter-spacing:.05em;border:1px solid rgba(255,255,255,.2);color:#CFE0D6;padding:5px 11px;border-radius:999px}
+
+  nav.toc{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:11px 30px}
+  nav.toc a{flex:none;font-size:12.5px;font-weight:600;color:var(--slate);text-decoration:none;padding:7px 13px;border-radius:8px;white-space:nowrap}
+  nav.toc a:hover{background:var(--bone-2);color:var(--ink)}
+
+  main{padding:14px 0 70px}
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:0}
+  .lead-no{font-family:'Fraunces',serif;font-size:13px;font-weight:600;letter-spacing:.12em;color:var(--green-d);text-transform:uppercase;margin-bottom:10px}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(25px,3.4vw,33px);letter-spacing:-.015em;line-height:1.1;margin-bottom:12px}
+  h3{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin:24px 0 8px;letter-spacing:-.01em}
+  p{margin-bottom:13px;font-size:15.5px;color:#23241F}
+  p.intro{font-size:17px;color:var(--slate)}
+  strong{font-weight:600;color:var(--ink)}
+  em.i{font-style:italic}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:.84em;background:var(--bone-2);padding:1px 6px;border-radius:5px;color:var(--green-ink);word-break:break-all}
+  a.link{color:var(--green-d);text-decoration:none;border-bottom:1px solid rgba(4,184,110,.4)}
+
+  /* country block */
+  .cblock{border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:8px;background:var(--paper)}
+  .cbar{display:flex;align-items:center;gap:16px;padding:18px 22px;color:#fff}
+  .cbar.fr{background:linear-gradient(100deg,var(--cyan),#0a6789)}
+  .cbar.es{background:linear-gradient(100deg,var(--green-d),#037a4b)}
+  .cbar.pt{background:linear-gradient(100deg,var(--violet),#4a3590)}
+  .cflag{font-family:'Fraunces',serif;font-weight:700;font-size:18px;background:rgba(255,255,255,.16);padding:6px 13px;border-radius:9px}
+  .cbar .ct{flex:1} .cbar .ct b{font-size:17px;display:block} .cbar .ct span{font-size:13px;opacity:.9}
+  .cbar .verdict{text-align:right;font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.9}
+  .cbar .verdict b{font-family:'Fraunces',serif;font-size:19px;display:block;letter-spacing:0;text-transform:none}
+  .cbody{padding:22px 24px}
+  .cbody .src{font-size:12px;color:var(--slate-2);margin-bottom:16px;padding-bottom:14px;border-bottom:1px dashed var(--line-2)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:6px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
+  .mini h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .mini.keep h4{color:var(--green-ink)} .mini.gap h4{color:var(--coral)}
+  .mini ul{list-style:none;display:grid;gap:9px}
+  .mini li{font-size:13.5px;color:#2c2e28;padding-left:18px;position:relative;line-height:1.45}
+  .mini.keep li::before{content:"✓";position:absolute;left:0;color:var(--green-d);font-weight:700}
+  .mini.gap li::before{content:"✕";position:absolute;left:0;color:var(--coral);font-weight:700}
+  .takeaway{margin-top:18px;background:var(--bone);border-left:3px solid var(--green-d);border-radius:0 10px 10px 0;padding:13px 16px;font-size:13.5px}
+  .takeaway b{color:var(--ink)}
+
+  .tbl{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tbl th{background:var(--forest);color:#EAF3EE;text-align:left;padding:11px 13px;font-weight:600;font-size:12.5px}
+  .tbl td{padding:11px 13px;border-top:1px solid var(--line);vertical-align:top}
+  .tbl tr:nth-child(even) td{background:var(--bone)}
+  .rank{font-family:'Fraunces',serif;font-weight:700;font-size:16px}
+  .r1{color:var(--coral)}.r2{color:var(--amber)}.r3{color:var(--green-d)}
+  .hi{font-weight:700;color:var(--coral)}.me{font-weight:700;color:var(--amber)}.lo{font-weight:700;color:var(--green-d)}
+
+  .call{display:flex;gap:15px;align-items:flex-start;border-radius:14px;padding:18px 20px;margin:20px 0}
+  .call.key{background:var(--amber-bg);border:1px solid #EAD9AC}
+  .call.rec{background:var(--green-bg);border:1px solid #BFE6CF}
+  .call .ci{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;color:#fff}
+  .call.key .ci{background:var(--amber)} .call.rec .ci{background:var(--green-d)}
+  .call h4{font-size:14px;margin-bottom:4px} .call p{font-size:13.5px;color:#33352d;margin:0}
+
+  footer{background:var(--forest);color:#9FBBAC;padding:32px 0;font-size:12.5px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+  footer .pill{border:1px solid rgba(255,255,255,.18);padding:5px 11px;border-radius:999px}
+  @media print{nav.toc{display:none}header{padding:28px 0}section{padding:22px 0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="kicker">WiSE · Accountant channel · current-state review</span>
+    <h1>What we have today — and why <em>this</em> one comes first</h1>
+    <p>A review of the live Sage accountant web pages for France, Spain and Portugal as they stand now — the honest baseline that makes the case for where to put the redesign effort, and in what order.</p>
+    <div class="hmeta"><span>3 live pages reviewed</span><span>Gap vs the WiSE standard</span><span>Priority ranking</span><span>Reviewed June 2026</span></div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#how">How to read this</a>
+    <a href="#fr">France</a>
+    <a href="#es">Spain</a>
+    <a href="#pt">Portugal</a>
+    <a href="#priority">Priority ranking</a>
+    <a href="#rec">Recommendation</a>
+  </div>
+</nav>
+
+<main>
+
+<section id="how">
+  <div class="wrap">
+    <div class="lead-no">00 — Method</div>
+    <h2>The baseline is the argument</h2>
+    <p class="intro">The fastest way to win buy-in for a redesign is not to show the shiny demo first — it's to show, plainly and fairly, what a prospect sees today, and let the gap speak. Each page below is reviewed on its own terms: what it's doing well, where it falls short of the WiSE standard, and what that means commercially.</p>
+    <p>Each market is then placed on four buy-in dimensions: <strong>regulatory urgency</strong> (how hard the clock is ticking), <strong>page gap</strong> (distance from the standard), <strong>strategic stakes</strong> (what the channel is worth), and <strong>effort to close</strong>. Together they produce a defensible priority order — not a matter of taste, but of where the gap and the stakes are largest at once.</p>
+    <div class="call key">
+      <div class="ci">i</div>
+      <div><h4>A note on fairness</h4><p>These are real, working pages built by teams under real constraints. The point is not that the work is poor — it's that the market changed underneath it. The regulatory cliff is new; the pages largely predate it. That's the gap worth funding.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FRANCE -->
+<section id="fr">
+  <div class="lead-no wrap">01 — France</div>
+  <div class="wrap">
+    <div class="cblock">
+      <div class="cbar fr">
+        <span class="cflag">FR</span>
+        <div class="ct"><b>France · Experts-comptables</b><span>The hard-cliff market — and the widest gap</span></div>
+        <div class="verdict">Priority<b>Highest</b></div>
+      </div>
+      <div class="cbody">
+        <div class="src">Reviewed: <code>sage.com/fr-fr/experts-comptables/produits/</code> and the experts-comptables product set.</div>
+        <h3>What the page is today</h3>
+        <p>A long product catalogue — roughly eighteen products grouped by verb (<em class="i">Automatiser, Communiquer, Produire, Conseiller</em>): Génération Experts Connect, Sage Service Paie, Supervizor, Conciliator Expert, Beeye, transfertBANQUE, Waibi, Smartisi, MyPassPro, Compta Collaborative, LinkUp Experts, and more — followed by a generic article carousel and standard "be called back / contact Sage" CTAs.</p>
+        <div class="twocol">
+          <div class="mini keep"><h4>What works</h4><ul>
+            <li>Genuine product depth — the portfolio breadth is real</li>
+            <li>Strong institutional proof points (CNOEC / CJEC partnerships) exist elsewhere on the site</li>
+            <li>Génération Experts is correctly positioned as the production core</li>
+          </ul></div>
+          <div class="mini gap"><h4>The gap vs the standard</h4><ul>
+            <li><b>No regulatory story at all</b> — the September 2026 e-invoicing cliff, the single biggest thing on every French accountant's mind, is absent</li>
+            <li>No mention of AKAO, the Approved Platform (PA), the PPF, or Sage's compliance readiness</li>
+            <li>Product-led, not customer-led — opens on features, not the client's reality</li>
+            <li>Fragmented, legacy naming ("anciennement Coala"; Conciliator, Supervizor, Waibi, Smartisi…) with no "one platform" story</li>
+            <li>Stale content — the article carousel still references the <em class="i">France 2023</em> Rugby World Cup</li>
+            <li>No pricing, no roadmap, no AI narrative, generic CTAs</li>
+          </ul></div>
+        </div>
+        <div class="takeaway"><b>Why it's first:</b> France has the clearest, hardest regulatory deadline of the three <em class="i">and</em> the page that says least about it. A prospect arriving with "what do I do about September 2026?" finds a product list and a two-year-old rugby article. The gap between market urgency and page content is at its maximum here — which is exactly where a redesign returns the most.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPAIN -->
+<section id="es">
+  <div class="lead-no wrap">02 — Spain</div>
+  <div class="wrap">
+    <div class="cblock">
+      <div class="cbar es">
+        <span class="cflag">ES</span>
+        <div class="ct"><b>Spain · Asesorías y Despachos</b><span>The most mature page — needs sharpening, not rebuilding</span></div>
+        <div class="verdict">Priority<b>Medium</b></div>
+      </div>
+      <div class="cbody">
+        <div class="src">Reviewed: <code>sage.com/es-es/software-asesorias-y-despachos/</code>, the Despachos and SfA product pages, and the asesorías blog.</div>
+        <h3>What the page is today</h3>
+        <p>A value-led landing page — "software that takes your firm beyond tax and accounting," with "Automatización y Crecimiento" framing — anchored on Sage Despachos Connected and the ContaPlus heritage, with Sage for Accountants (two business models) present. Crucially, the regulatory hook <em class="i">is</em> surfaced: product copy references adapting to "las nuevas normas de facturación como Verifactu o factura electrónica," and the blog is actively maintained (2026 fiscal calendar, "VeriFactu Ready," 2026 tax updates).</p>
+        <div class="twocol">
+          <div class="mini keep"><h4>What works</h4><ul>
+            <li>Regulatory reality is present — VeriFactu and factura electrónica appear, not absent as in FR</li>
+            <li>Sage for Accountants is surfaced, with a clear two-model choice</li>
+            <li>Content engine is current and credible — active 2026 advisory content</li>
+            <li>Value-led framing ("beyond tax and accounting") is closer to customer-voice</li>
+          </ul></div>
+          <div class="mini gap"><h4>The gap vs the standard</h4><ul>
+            <li>The regulatory hook is <b>buried in product copy</b>, not leading the page as the wedge</li>
+            <li>No "two clocks, one platform" clarity — VeriFactu and Crea y Crece aren't framed as a single Sage answer</li>
+            <li>Legacy naming persists (Despachos Connected, ContaPlus) with overlapping lines</li>
+            <li>Still suite/product-structured rather than narrative (clock → platform → roadmap → AI → pricing)</li>
+          </ul></div>
+        </div>
+        <div class="takeaway"><b>Why it's medium:</b> Spain is closest to the standard already — the raw materials (regulatory hook, SfA, current content) are on the page. The work is editorial, not foundational: lead with the dual-clock, consolidate the naming, and lift SfA above the fold. High return for relatively low effort.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTUGAL -->
+<section id="pt">
+  <div class="lead-no wrap">03 — Portugal</div>
+  <div class="wrap">
+    <div class="cblock">
+      <div class="cbar pt">
+        <span class="cflag">PT</span>
+        <div class="ct"><b>Portugal · Contabilistas</b><span>Good flagship, fragmented estate, dated terminology</span></div>
+        <div class="verdict">Priority<b>Medium</b></div>
+      </div>
+      <div class="cbody">
+        <div class="src">Reviewed: <code>sage.com/pt-pt/contabilistas/sage-for-accountants/</code> (+ pricing), and the Sage One / Sage&nbsp;50 / Sage&nbsp;100 Contabilidade lines.</div>
+        <h3>What the page is today</h3>
+        <p>The Sage for Accountants flagship is decent: an integrated accounting / payroll / asset / practice-management proposition, with a real pricing page and a desktop-vs-cloud choice. Compliance is grounded correctly in Portugal's actual reality — SVAT certification (the AT validation seal), SAF-T (PT), and IES/DA — rather than a borrowed "deadline" narrative. But around it sits a fragmented legacy estate (Sage One, Sage 50 Contabilidade, Sage 100 Contabilidade) with overlapping positioning.</p>
+        <div class="twocol">
+          <div class="mini keep"><h4>What works</h4><ul>
+            <li>SfA flagship is clear, with transparent pricing and a model choice</li>
+            <li>Compliance is correctly grounded in PT reality (SVAT, SAF-T, IES/DA)</li>
+            <li>Active advisory blog content for contabilistas</li>
+          </ul></div>
+          <div class="mini gap"><h4>The gap vs the standard</h4><ul>
+            <li>Fragmented portfolio — SfA competes with Sage One, Sage 50 and Sage 100 for the same buyer</li>
+            <li><b>Dated terminology</b> — "Sage One TOC" still uses the deprecated "TOC" label (the profession is now <em class="i">Contabilista Certificado</em>)</li>
+            <li>Sage's own PT content uses "migrar / migração" — the banned change word</li>
+            <li>No single narrative arc; product pages rather than a customer journey</li>
+          </ul></div>
+        </div>
+        <div class="takeaway"><b>Why it's medium (and a useful mirror):</b> the real PT page is actually <em class="i">better grounded</em> in local regulation than our own PT demo, which over-rotated to a "2027 cliff." The work here is consolidation and terminology — collapse the estate behind SfA, retire "TOC," and remove "migração" — more than a ground-up rebuild.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIORITY -->
+<section id="priority">
+  <div class="wrap">
+    <div class="lead-no">04 — The ranking</div>
+    <h2>Where to spend the effort, and why</h2>
+    <p class="intro">Four dimensions, scored High / Medium / Low. Priority is highest where urgency and page-gap are both high — i.e. where the market is moving fastest and the page is least ready.</p>
+    <table class="tbl">
+      <tr><th>Market</th><th>Regulatory urgency</th><th>Page gap</th><th>Strategic stakes</th><th>Effort to close</th><th>Priority</th></tr>
+      <tr>
+        <td><b>France</b></td>
+        <td><span class="hi">High</span> — hard cliff Sept 2026/27</td>
+        <td><span class="hi">High</span> — no regulatory story</td>
+        <td><span class="hi">High</span> — flagship WiSE market</td>
+        <td><span class="me">Medium</span> — full rebuild</td>
+        <td><span class="rank r1">1 · Now</span></td>
+      </tr>
+      <tr>
+        <td><b>Spain</b></td>
+        <td><span class="me">Medium</span> — 2027–28, dual clock</td>
+        <td><span class="me">Medium</span> — hook present but buried</td>
+        <td><span class="hi">High</span> — large despachos base</td>
+        <td><span class="lo">Low</span> — editorial sharpening</td>
+        <td><span class="rank r2">2 · Next</span></td>
+      </tr>
+      <tr>
+        <td><b>Portugal</b></td>
+        <td><span class="lo">Low–Med</span> — continuous, deferred</td>
+        <td><span class="me">Medium</span> — fragmented estate</td>
+        <td><span class="me">Medium</span></td>
+        <td><span class="me">Medium</span> — consolidation</td>
+        <td><span class="rank r3">3 · Then</span></td>
+      </tr>
+    </table>
+    <div class="call key">
+      <div class="ci">!</div>
+      <div><h4>The one-line case</h4><p>France is the only market where the highest regulatory urgency meets the widest page gap. Updating it first protects the flagship WiSE market at the exact moment its prospects are actively searching for answers the current page doesn't give.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATION -->
+<section id="rec">
+  <div class="wrap">
+    <div class="lead-no">05 — Recommendation</div>
+    <h2>A sequenced, low-risk path</h2>
+    <p class="intro">Each step compounds: the France rebuild produces the master template; Spain and Portugal then inherit it, so each subsequent market is faster and more consistent than the last.</p>
+    <table class="tbl">
+      <tr><th style="width:60px">Step</th><th>Move</th><th>Why now</th></tr>
+      <tr><td><b>1</b></td><td>Rebuild <b>France</b> on the WiSE standard — French, September-2026 hook, AKAO/PPF surfaced, three-phase roadmap. Extract it as the master template.</td><td>Largest gap × highest urgency; creates the reusable base.</td></tr>
+      <tr><td><b>2</b></td><td><b>Spain</b> — re-front the existing page on the master: lead with the dual clock, consolidate naming, lift SfA above the fold.</td><td>Closest to standard; editorial effort, fast win, large base.</td></tr>
+      <tr><td><b>3</b></td><td><b>Portugal</b> — consolidate the estate behind SfA on the master; retire "TOC," remove "migração," keep the strong SVAT/SAF-T grounding.</td><td>Mostly consolidation; lowest urgency, so it waits — but inherits everything.</td></tr>
+      <tr><td><b>4</b></td><td>Bank the master template + rubric as the <b>global pattern</b> for the next markets.</td><td>Turns three fixes into a repeatable capability.</td></tr>
+    </table>
+    <div class="call rec">
+      <div class="ci">→</div>
+      <div><h4>What this buys the programme</h4><p>A defensible reason to start with France today, a fast follow in Spain, a tidy consolidation in Portugal — and a tested master template that lets every future Sage market launch a consistent, accurate accountant page in days. The demos show the destination; this review shows why the journey starts where it does.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Current State &amp; the Case for Priority · WiSE programme · reviewed June 2026</span>
+    <span class="pill">Confidential · internal · not for distribution</span>
+  </div>
+</footer>
+</body>
+</html>

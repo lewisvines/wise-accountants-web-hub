@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winning in Small Europe · Accountants — Demo Hub (Confidential)</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="Internal review hub linking the Sage accountant web demos for France, Spain and Portugal. Confidential.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#00DC82; --green-d:#04B86E; --green-ink:#065C3C;
+    --ink:#0F0F10; --ink2:#15151A; --ink3:#1C1C22; --ink-soft:#3A3A3F;
+    --coral:#FF7676; --cyan:#6ED1F0; --violet:#B9A8FF;
+    --paper:#FFFFFF; --mist:#B9C2BC; --mist-d:#8FA39A;
+    --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.14);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    color:#EAEEE9; background:var(--ink); line-height:1.5;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .bg{position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 78% 8%, rgba(0,220,130,.13) 0%, transparent 46%),
+      radial-gradient(ellipse at 12% 88%, rgba(110,209,240,.07) 0%, transparent 42%),
+      radial-gradient(ellipse at 88% 84%, rgba(185,168,255,.05) 0%, transparent 40%),
+      var(--ink);}
+  .bg::after{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(to right,rgba(255,255,255,.018) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(255,255,255,.018) 1px,transparent 1px);
+    background-size:96px 96px;
+    mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 78%);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+
+  /* top bar */
+  header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+    background:rgba(15,15,16,.62);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .mark{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:-.01em}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 0 4px rgba(0,220,130,.16)}
+  .mark small{display:block;font-size:11px;color:var(--mist-d);font-weight:500;letter-spacing:.02em}
+  .conf{font-size:11px;color:var(--mist-d);border:1px solid var(--line-2);
+    padding:5px 11px;border-radius:999px;letter-spacing:.06em;text-transform:uppercase}
+
+  /* hero */
+  .hero{padding:84px 0 48px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:22px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--green);opacity:.6}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.02;
+    font-size:clamp(40px,6.4vw,76px);letter-spacing:-.02em;color:#fff;max-width:15ch}
+  h1 em{font-style:italic;color:var(--green)}
+  .lede{margin-top:26px;max-width:60ch;font-size:clamp(16px,1.7vw,19px);color:var(--mist)}
+  .lede strong{color:#fff;font-weight:600}
+
+  /* reveal */
+  .rev{opacity:0;transform:translateY(18px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .d1{animation-delay:.05s}.d2{animation-delay:.14s}.d3{animation-delay:.23s}
+  .d4{animation-delay:.32s}.d5{animation-delay:.41s}.d6{animation-delay:.5s}
+  @media (prefers-reduced-motion:reduce){.rev{animation:none;opacity:1;transform:none}}
+
+  /* section label */
+  .slab{display:flex;align-items:baseline;gap:14px;margin:64px 0 22px}
+  .slab h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px;color:#fff;letter-spacing:-.01em}
+  .slab span{font-size:12px;color:var(--mist-d);letter-spacing:.08em;text-transform:uppercase}
+  .slab .rule{flex:1;height:1px;background:var(--line)}
+
+  /* country cards */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,var(--ink2),var(--ink));
+    border:1px solid var(--line);border-radius:18px;padding:26px 24px 22px;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;
+    background:linear-gradient(140deg,var(--accent,var(--green)),transparent 42%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:.5;transition:opacity .35s}
+  .card:hover{transform:translateY(-6px);border-color:var(--line-2);
+    box-shadow:0 24px 60px -28px rgba(0,0,0,.8)}
+  .card:hover::before{opacity:1}
+  .cc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .flag{font-family:'Fraunces',serif;font-weight:700;font-size:15px;letter-spacing:.04em;
+    color:var(--ink);background:var(--accent,var(--green));padding:5px 11px;border-radius:8px}
+  .live{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;color:var(--mist)}
+  .live i{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;
+    box-shadow:0 0 0 3px rgba(0,220,130,.18)}
+  .live.gated i{background:var(--coral);box-shadow:0 0 0 3px rgba(255,118,118,.18)}
+  .card h3{font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:#fff;margin-bottom:4px}
+  .card .sub{font-size:13px;color:var(--mist-d);margin-bottom:18px;min-height:34px}
+  .meta{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:20px;
+    padding-top:16px;border-top:1px solid var(--line)}
+  .meta li{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--mist)}
+  .meta b{color:#cdd6cf;font-weight:600;min-width:78px;display:inline-block}
+  .tick{color:var(--green)}.warn{color:var(--coral)}.neu{color:var(--cyan)}
+  .go{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    width:100%;padding:12px;border-radius:11px;font-weight:600;font-size:14px;text-decoration:none;
+    color:var(--ink);background:var(--accent,var(--green));transition:filter .25s,transform .25s}
+  .go:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .go.ghost{background:transparent;color:#fff;border:1px solid var(--line-2)}
+  .go.ghost:hover{border-color:var(--green);color:var(--green)}
+  .go svg{width:15px;height:15px}
+
+  /* clock strip */
+  .clocks{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){.clocks{grid-template-columns:1fr}}
+  .clock{background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px}
+  .clock .yr{font-family:'Fraunces',serif;font-size:13px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent,var(--green));font-weight:600;margin-bottom:10px}
+  .clock h4{font-size:14.5px;color:#fff;margin-bottom:8px;font-weight:600}
+  .clock p{font-size:13px;color:var(--mist);line-height:1.55}
+  .clock .tag{display:inline-block;margin-top:13px;font-size:11px;font-weight:600;
+    padding:4px 10px;border-radius:999px;letter-spacing:.03em}
+  .tag.hard{background:rgba(255,118,118,.13);color:var(--coral)}
+  .tag.dual{background:rgba(110,209,240,.13);color:var(--cyan)}
+  .tag.soft{background:rgba(185,168,255,.13);color:var(--violet)}
+
+  /* note panel */
+  .note{margin-top:22px;display:flex;gap:16px;align-items:flex-start;
+    background:linear-gradient(140deg,rgba(255,118,118,.07),transparent);
+    border:1px solid rgba(255,118,118,.22);border-radius:16px;padding:20px 22px}
+  .note .ic{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+    background:rgba(255,118,118,.15);color:var(--coral);font-weight:700;font-family:'Fraunces',serif}
+  .note h4{font-size:14px;color:#fff;margin-bottom:5px}
+  .note p{font-size:13px;color:var(--mist);line-height:1.55}
+  .note a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(0,220,130,.4)}
+
+  footer{margin-top:78px;border-top:1px solid var(--line);padding:30px 0 60px}
+  .foot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+    font-size:12px;color:var(--mist-d)}
+  .foot .pill{border:1px solid var(--line-2);padding:5px 11px;border-radius:999px;letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<header>
+  <div class="wrap bar">
+    <div class="mark">
+      <span class="dot"></span>
+      <span>WiSE · Accountants<small>Winning in Small Europe — web demo hub</small></span>
+    </div>
+    <span class="conf">Confidential · Internal review</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="eyebrow rev d1">Accountant channel · FR · ES · PT</span>
+    <h1 class="rev d2">One programme.<br>Three markets.<br><em>One way to win.</em></h1>
+    <p class="lede rev d3">The accountant web demos for <strong>France</strong>, <strong>Spain</strong> and <strong>Portugal</strong> — now built on one shared system, bilingual, each opening its live build. Below them: a review of the <strong>real Sage pages</strong> they're built to replace, and the standard that holds them together.</p>
+  </section>
+
+  <div class="slab rev d4"><h2>The three demos</h2><span>live builds</span><div class="rule"></div></div>
+
+  <section class="grid">
+    <!-- FRANCE -->
+    <article class="card rev d4" style="--accent:var(--cyan)">
+      <div class="cc-top">
+        <span class="flag">FR · France</span>
+        <span class="live"><i></i>Gold standard</span>
+      </div>
+      <h3>Experts-comptables</h3>
+      <p class="sub">The hard-cliff market. e-invoicing + e-reporting land Sept 2026 / 2027.</p>
+      <ul class="meta">
+        <li><b>Status</b><span class="tick">✓ Approved — Diego &amp; Jeremy</span></li>
+        <li><b>Build</b><span class="tick">✓ The benchmark France strategy build</span></li>
+        <li><b>Access</b><span class="neu">Confidential · gated</span></li>
+        <li><b>Note</b><span class="neu">Reference standard — left untouched</span></li>
+      </ul>
+      <a class="go" href="https://lewisvines.github.io/sage-fr-demo/" target="_blank" rel="noopener">
+        Open France demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </article>
+
+    <!-- SPAIN -->
+    <article class="card rev d5" style="--accent:var(--green)">
+      <div class="cc-top">
+        <span class="flag">ES · España</span>
+        <span class="live"><i></i>Live</span>
+      </div>
+      <h3>Asesorías</h3>
+      <p class="sub">The dual-clock market. VeriFactu + Crea y Crece, biting 2027–28.</p>
+      <ul class="meta">
+        <li><b>Language</b><span class="tick">✓ <code>lang="es"</code>, bilingual</span></li>
+        <li><b>Access</b><span class="tick">✓ Open</span></li>
+        <li><b>System</b><span class="tick">✓ Fraunces / Inter · core palette</span></li>
+        <li><b>Narrative</b><span class="tick">✓ Full 9-section arc</span></li>
+      </ul>
+      <a class="go" href="https://lewisvines.github.io/sage-es-demo/" target="_blank" rel="noopener">
+        Open Spain demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </article>
+
+    <!-- PORTUGAL -->
+    <article class="card rev d6" style="--accent:var(--violet)">
+      <div class="cc-top">
+        <span class="flag">PT · Portugal</span>
+        <span class="live"><i></i>Live</span>
+      </div>
+      <h3>Contabilistas</h3>
+      <p class="sub">The layered market. No B2B cliff — model already live since 2022–23.</p>
+      <ul class="meta">
+        <li><b>Language</b><span class="tick">✓ <code>lang="pt"</code>, bilingual</span></li>
+        <li><b>Access</b><span class="tick">✓ Open</span></li>
+        <li><b>System</b><span class="tick">✓ Parallel to ES build</span></li>
+        <li><b>Hook</b><span class="warn">⚠ "2027" overstated for PT reality</span></li>
+      </ul>
+      <a class="go" href="https://lewisvines.github.io/sage-pt-demo/" target="_blank" rel="noopener">
+        Open Portugal demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </article>
+  </section>
+
+  <div class="slab"><h2>Why the same template can't ship three times</h2><span>the regulatory clock per market</span><div class="rule"></div></div>
+
+  <section class="clocks">
+    <div class="clock" style="--accent:var(--cyan)">
+      <div class="yr">France</div>
+      <h4>A hard cliff</h4>
+      <p>1 Sept 2026: every business must <em>receive</em> e-invoices; large &amp; mid-sized firms must <em>issue</em> and e-report. 1 Sept 2027: SMEs and micro join. Issued via an Approved Platform (<b>PA</b>) — which is what AKAO is — into the public portal (<b>PPF</b>).</p>
+      <span class="tag hard">Single, dated deadline</span>
+    </div>
+    <div class="clock" style="--accent:var(--green)">
+      <div class="yr">Spain</div>
+      <h4>Two clocks at once</h4>
+      <p><b>VeriFactu</b> (certified, tamper-evident billing software) rolls through 2026–27. <b>Crea y Crece</b> B2B e-invoicing — Royal Decree approved Mar 2026 — bites for large firms ~2027 and everyone else ~2028. Two obligations, one platform answer.</p>
+      <span class="tag dual">Dual obligation</span>
+    </div>
+    <div class="clock" style="--accent:var(--violet)">
+      <div class="yr">Portugal</div>
+      <h4>Layered, already running</h4>
+      <p>No B2B clearance mandate. Certified software + ATCUD + QR + monthly SAF-T have been live since 2022–23. "2027" is really just the much-deferred QES-on-PDF point; SAF-T Accounting slips to 2028. The pressure is real but it isn't a cliff.</p>
+      <span class="tag soft">Continuous, deferred</span>
+    </div>
+  </section>
+
+  <div class="slab"><h2>Read next</h2><span>the case &amp; the standard</span><div class="rule"></div></div>
+  <section class="grid" style="grid-template-columns:1fr 1fr">
+    <a class="card rev" href="./current-state-review.html" style="--accent:var(--coral);text-decoration:none">
+      <div class="cc-top"><span class="flag" style="background:var(--coral);color:#fff">01</span><span class="live"><i style="background:var(--coral);box-shadow:0 0 0 3px rgba(255,118,118,.18)"></i>Buy-in</span></div>
+      <h3>Current State &amp; the Case for Priority</h3>
+      <p class="sub" style="min-height:auto">A review of the <em>real, live</em> Sage pages today — and why France comes first. The baseline that wins the redesign argument.</p>
+      <span class="go" style="background:var(--coral);color:#fff;margin-top:14px">Open the review
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card rev" href="./playbook.html" style="--accent:var(--green);text-decoration:none">
+      <div class="cc-top"><span class="flag">02</span><span class="live"><i></i>Standard</span></div>
+      <h3>The Sage Accountant Web Playbook</h3>
+      <p class="sub" style="min-height:auto">Principles, a 10-point rubric, country scorecards, the terminology lock and a country-launch template for replicating globally.</p>
+      <span class="go" style="margin-top:14px">Open the playbook
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </section>
+
+  <div class="note">
+    <div class="ic">i</div>
+    <div>
+      <h4>Make the links live</h4>
+      <p>Each demo is a single <code>index.html</code> in its own repo. To put one live, the repo needs <b>Settings → Pages → Deploy from branch → <code>main</code> / root</b> enabled; it then serves at <code>lewisvines.github.io/&lt;repo&gt;/</code>. France (<code>sage-fr-demo</code>) is already the approved build — leave it as is. This hub, the review and the playbook must sit together in one repo so their links resolve.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Sage · WiSE programme — accountant channel · FR / ES / PT</span>
+    <span class="pill">Stakeholder review only · not for distribution</span>
+  </div>
+</footer>
+</body>
+</html>

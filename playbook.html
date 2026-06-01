@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sage Accountant Web Playbook — WiSE (Confidential)</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="Principles, scoring rubric, country scorecards and a replication system for Sage accountant web pages. Confidential.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,500;9..144,0,600;9..144,0,700;9..144,1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#00DC82; --green-d:#04B86E; --green-ink:#065C3C; --forest:#0a2e21;
+    --ink:#0F0F10; --ink-soft:#3A3A3F; --slate:#46564e; --slate-2:#6c7a72;
+    --paper:#FFFFFF; --bone:#F7F8F5; --bone-2:#EEF1EB; --line:#E2E7DE; --line-2:#D2DACE;
+    --coral:#E0574E; --coral-bg:#FCEDEB; --cyan:#0E7FA8; --cyan-bg:#E7F4FA;
+    --violet:#6A4FB0; --violet-bg:#F0ECFA; --amber:#B07A12; --amber-bg:#FBF3E2;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',Arial,sans-serif;color:var(--ink);background:var(--bone);
+    line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 30px}
+
+  /* header */
+  header{background:var(--forest);color:#EAF3EE;padding:62px 0 54px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at 88% -10%,rgba(0,220,130,.22),transparent 50%)}
+  header .wrap{position:relative}
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:20px}
+  .kicker::before{content:"";width:28px;height:1px;background:var(--green)}
+  header h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(34px,5.4vw,56px);
+    line-height:1.04;letter-spacing:-.02em;max-width:18ch}
+  header h1 em{font-style:italic;color:var(--green)}
+  header p{margin-top:20px;max-width:62ch;font-size:17px;color:#BFD3C8}
+  .hmeta{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+  .hmeta span{font-size:11.5px;letter-spacing:.05em;border:1px solid rgba(255,255,255,.2);
+    color:#CFE0D6;padding:5px 11px;border-radius:999px}
+
+  /* contents */
+  nav.toc{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:11px;padding-bottom:11px}
+  nav.toc a{flex:none;font-size:12.5px;font-weight:600;color:var(--slate);text-decoration:none;
+    padding:7px 13px;border-radius:8px;white-space:nowrap;transition:.2s}
+  nav.toc a:hover{background:var(--bone-2);color:var(--ink)}
+
+  main{padding:18px 0 80px}
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:0}
+  .lead-no{font-family:'Fraunces',serif;font-size:13px;font-weight:600;letter-spacing:.12em;
+    color:var(--green-d);text-transform:uppercase;margin-bottom:10px}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(26px,3.6vw,34px);
+    letter-spacing:-.015em;line-height:1.1;margin-bottom:14px}
+  h3{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:30px 0 10px;letter-spacing:-.01em}
+  p{margin-bottom:14px;font-size:15.5px;color:#23241F}
+  p.intro{font-size:17px;color:var(--slate)}
+  strong{font-weight:600;color:var(--ink)}
+  em.i{font-style:italic}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+    background:var(--bone-2);padding:1px 6px;border-radius:5px;color:var(--green-ink)}
+  a.link{color:var(--green-d);text-decoration:none;border-bottom:1px solid rgba(4,184,110,.4)}
+
+  /* do/dont */
+  .ddgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  @media(max-width:720px){.ddgrid{grid-template-columns:1fr}}
+  .col{border-radius:16px;padding:22px 22px 8px;border:1px solid var(--line)}
+  .col.do{background:linear-gradient(180deg,#F0FBF5,#fff)}
+  .col.dont{background:linear-gradient(180deg,#FDF1EF,#fff)}
+  .col h4{font-family:'Fraunces',serif;font-size:16px;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+  .col.do h4{color:var(--green-ink)} .col.dont h4{color:var(--coral)}
+  .badge{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-weight:700;font-size:14px}
+  .col.do .badge{background:var(--green);color:#053} .col.dont .badge{background:var(--coral);color:#fff}
+  .item{padding:0 0 16px;margin-bottom:16px;border-bottom:1px dashed var(--line-2)}
+  .item:last-child{border-bottom:0}
+  .item b{display:block;font-size:14px;margin-bottom:3px}
+  .item span{font-size:13px;color:var(--slate);line-height:1.5}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tbl th{background:var(--forest);color:#EAF3EE;text-align:left;padding:11px 13px;font-weight:600;font-size:12.5px;letter-spacing:.02em}
+  .tbl td{padding:11px 13px;border-top:1px solid var(--line);vertical-align:top;color:#23241F}
+  .tbl tr:nth-child(even) td{background:var(--bone)}
+  .tbl td b{color:var(--ink)}
+  .sc{font-family:'Fraunces',serif;font-weight:700;font-size:15px}
+  .s5{color:var(--green-d)}.s4{color:var(--green-ink)}.s3{color:var(--amber)}.s2{color:var(--coral)}.s1{color:var(--coral)}
+  .dim{font-weight:600}
+
+  /* scorecard header card */
+  .scard{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:14px;
+    border:1px solid var(--line);margin:26px 0 4px}
+  .scard .tot{font-family:'Fraunces',serif;font-weight:700;font-size:30px;line-height:1}
+  .scard .tot small{display:block;font-family:'Inter';font-size:11px;font-weight:600;color:var(--slate);letter-spacing:.05em;margin-top:3px}
+  .scard .desc b{font-size:16px} .scard .desc span{font-size:13px;color:var(--slate)}
+  .flagchip{font-family:'Fraunces',serif;font-weight:700;font-size:13px;padding:6px 12px;border-radius:8px;color:#fff}
+  .fr{background:var(--cyan)} .es{background:var(--green-d)} .pt{background:var(--violet)}
+
+  /* callout */
+  .call{display:flex;gap:15px;align-items:flex-start;border-radius:14px;padding:18px 20px;margin:20px 0}
+  .call.key{background:var(--amber-bg);border:1px solid #EAD9AC}
+  .call.win{background:#EAF8F0;border:1px solid #BFE6CF}
+  .call .ci{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+    font-family:'Fraunces',serif;font-weight:700;color:#fff}
+  .call.key .ci{background:var(--amber)} .call.win .ci{background:var(--green-d)}
+  .call h4{font-size:14px;margin-bottom:4px} .call p{font-size:13.5px;color:#33352d;margin:0}
+
+  /* steps */
+  ol.steps{counter-reset:s;list-style:none;margin:14px 0}
+  ol.steps li{position:relative;padding:0 0 18px 50px;margin-bottom:0}
+  ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-2px;
+    width:34px;height:34px;border-radius:9px;background:var(--forest);color:var(--green);
+    font-family:'Fraunces',serif;font-weight:700;display:grid;place-items:center}
+  ol.steps li::after{content:"";position:absolute;left:16px;top:34px;bottom:2px;width:1px;background:var(--line-2)}
+  ol.steps li:last-child::after{display:none}
+  ol.steps b{display:block;font-size:15px;margin-bottom:3px}
+  ol.steps span{font-size:13.5px;color:var(--slate)}
+
+  footer{background:var(--forest);color:#9FBBAC;padding:34px 0;font-size:12.5px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+  footer .pill{border:1px solid rgba(255,255,255,.18);padding:5px 11px;border-radius:999px}
+  @media print{nav.toc{display:none}header{padding:30px 0}section{padding:24px 0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="kicker">WiSE · Accountant channel · FR / ES / PT</span>
+    <h1>The Sage Accountant <em>Web Playbook</em></h1>
+    <p>One standard for what wins on a Sage accountant page — and a system for replicating it across any market, fast. Built from the live France, Spain and Portugal demos.</p>
+    <div class="hmeta">
+      <span>Principles</span><span>10-point rubric</span><span>FR / ES / PT scorecards</span><span>Country-launch template</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#why">Why this exists</a>
+    <a href="#principles">Principles</a>
+    <a href="#rubric">The rubric</a>
+    <a href="#scorecards">Country scorecards</a>
+    <a href="#hooks">Re-grounding the hook</a>
+    <a href="#terms">Terminology lock</a>
+    <a href="#replicate">Replication system</a>
+  </div>
+</nav>
+
+<main>
+
+<section id="why">
+  <div class="wrap">
+    <div class="lead-no">00 — Orientation</div>
+    <h2>The same template cannot ship three times</h2>
+    <p class="intro">Across the three demos there is one strong, repeatable pattern — and three different regulatory truths it is being stretched over. The job of this playbook is to lock the pattern, name the rules that make it work, and give every future market a way to launch fast without losing the things that make it Sage.</p>
+    <p>Two structural facts shape everything below. First, the <strong>regulatory clock is the wedge</strong> on every page — but the clock reads differently in each country, and a copy-pasted "2027" claim is already inaccurate in Portugal. Second, there are <strong>two design systems</strong> quietly competing in the repos: the demo trio's bespoke green (<code>#00DC82</code> + Fraunces) and <code>sage-freemium-france</code>'s Sage-brand green (<code>#00dc06</code> + forest + "Sage Text"). Before this becomes the global pattern, the family must converge on one tokenised system.</p>
+    <div class="call key">
+      <div class="ci">!</div>
+      <div><h4>The one principle everything else serves</h4>
+      <p>Lead with the customer's regulatory reality — accurately, per country — framed as their opportunity, never as a Sage product pitch and never with an apology. Acknowledge ≠ apologise. Investment-led, customer-voice, forward-facing.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap">
+    <div class="lead-no">01 — Principles</div>
+    <h2>What belongs on the page — and what doesn't</h2>
+    <p class="intro">Derived from the strongest shared pattern in the Spain and Portugal builds, pressure-tested against the tone discipline the WiSE programme already runs on.</p>
+
+    <div class="ddgrid">
+      <div class="col do">
+        <h4><span class="badge">✓</span>Include — the winning pattern</h4>
+        <div class="item"><b>An accurate regulatory hook, in the customer's voice</b><span>Open on what changes for <em class="i">their</em> clients, dated to that country's real mandate. "What this means for your firm," not "introducing Sage Active."</span></div>
+        <div class="item"><b>Acknowledge-and-reset, without apology</b><span>The ES demo's "we know the message hasn't always been clear" owns past confusion then resets to a confident forward position. Honest, not sorry.</span></div>
+        <div class="item"><b>Collapse complexity into one Sage answer</b><span>"Two clocks, one platform" (ES). Name the competing obligations, then show a single place to handle them.</span></div>
+        <div class="item"><b>A clear, phased roadmap</b><span>Map to the three-phase France logic: live today / on the roadmap / in discovery. Show direction; never present roadmap items as available now.</span></div>
+        <div class="item"><b>An honest AI position</b><span>"Where we're taking AI in the practice" — a stated direction of travel, not vapour, not over-claim.</span></div>
+        <div class="item"><b>Transparent pricing as a differentiator</b><span>"A clear price for every firm size." Clarity is the competitive wedge in a confused market.</span></div>
+        <div class="item"><b>Five scannable anchors + repeated specific CTAs</b><span>Clock / platform / journey / AI / pricing. CTAs are channel-appropriate and working: <em class="i">Request a demo · Talk to a specialist · Get started</em>.</span></div>
+        <div class="item"><b>Visible proof of compliance standing</b><span>The DGFiP-registered PA (AKAO) for France; VeriFactu/Crea y Crece readiness for Spain. Present, not buried.</span></div>
+      </div>
+
+      <div class="col dont">
+        <h4><span class="badge">✕</span>Exclude — the anti-patterns</h4>
+        <div class="item"><b>Apologetic language</b><span>No "sorry," no "we got it wrong," no mea culpa. It undercuts the investment-led posture and the channel's confidence in Sage.</span></div>
+        <div class="item"><b>The word "migration"</b><span>Banned. It frames change as cost and disruption rather than readiness and growth.</span></div>
+        <div class="item"><b>A product-led hero</b><span>Don't open with feature lists or product names. The customer's regulatory reality is the door; the product is what's behind it.</span></div>
+        <div class="item"><b>A copy-pasted regulatory clock</b><span>The single biggest risk. "In 2027 every client changes how they invoice" is true-ish for FR/ES and <em class="i">wrong</em> for PT. Re-ground per market.</span></div>
+        <div class="item"><b>Wrong or missing localisation</b><span>Every country page must carry the correct language and <code>lang</code> attribute, currency, date format and local regulator names. Verify the outer shell as well as the content on every build.</span></div>
+        <div class="item"><b>Two design systems</b><span>Pick one tokenised system (brand green + agreed type) and hold it. Bespoke per-market palettes break the family and slow replication.</span></div>
+        <div class="item"><b>Bloat &amp; gating on live pages</b><span>Gating is right for stakeholder review (FR), wrong for acquisition. The 880&nbsp;KB encrypted payload and password wall can't ship to the public.</span></div>
+        <div class="item"><b>Overpromised roadmap &amp; competitor-bashing</b><span>Don't show Phase 2/3 as live. Don't attack rivals — win on clarity and readiness, in the customer's voice.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rubric">
+  <div class="wrap">
+    <div class="lead-no">02 — The measuring stick</div>
+    <h2>A 10-dimension scoring rubric</h2>
+    <p class="intro">The same ten questions, scored 0–5, for any Sage accountant page in any market. It turns "this feels off" into a number you can act on — and it's what makes fast, consistent iteration possible at global scale.</p>
+    <table class="tbl">
+      <tr><th style="width:30px">#</th><th>Dimension</th><th>What a 5 looks like</th></tr>
+      <tr><td>1</td><td class="dim">Customer-voice hook</td><td>Opens on the customer's regulatory reality as their opportunity; zero product-led framing.</td></tr>
+      <tr><td>2</td><td class="dim">Tone discipline</td><td>Confident, investment-led, forward-facing; acknowledges without apologising; no "migration."</td></tr>
+      <tr><td>3</td><td class="dim">Localisation correctness</td><td>Correct language &amp; <code>lang</code>; regulator names, dates, currency and the <em class="i">specific</em> local mandate are accurate.</td></tr>
+      <tr><td>4</td><td class="dim">Brand / design-system</td><td>One tokenised system: brand colour, agreed type pairing, shared components.</td></tr>
+      <tr><td>5</td><td class="dim">Narrative architecture</td><td>Full arc: clock → platform → roadmap → AI → pricing, with five scannable anchors.</td></tr>
+      <tr><td>6</td><td class="dim">Naming &amp; terminology</td><td>Locked terms throughout (SfA, GE, Sage Prévision, AKAO, PA vs PPF); nothing freelanced.</td></tr>
+      <tr><td>7</td><td class="dim">Proof &amp; trust</td><td>Compliance standing, customer voice and credible evidence are visible and not over-claimed.</td></tr>
+      <tr><td>8</td><td class="dim">CTA strategy</td><td>Specific, repeated, channel-appropriate and <em class="i">working</em> calls to action.</td></tr>
+      <tr><td>9</td><td class="dim">Technical hygiene</td><td>Performance budget met, accessible, correct meta/SEO posture, no gating on live acquisition pages.</td></tr>
+      <tr><td>10</td><td class="dim">Replicability</td><td>Componentised, tokenised, translatable, documented — a new market can fork it in days.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="scorecards">
+  <div class="wrap">
+    <div class="lead-no">03 — Country scorecards</div>
+    <h2>Where each market stands today</h2>
+    <p class="intro">Scored against the rubric above, out of 50. <strong>France is the approved gold standard</strong> — signed off by Diego and Jeremy — and sets the benchmark the others are measured against. Its confidential gating is a deliberate, approved choice for stakeholder review, not a fault. Spain and Portugal are scored on their distance from that bar.</p>
+
+    <!-- SPAIN -->
+    <div class="scard" style="background:#EFFCF4;border-color:#BFE6CF">
+      <div class="tot s4">42<small>/ 50</small></div>
+      <div class="desc" style="flex:1"><b><span class="flagchip es">ES</span> &nbsp;Spain · Asesorías</b><br><span>Strongest of the alignable pair. Closest to the France standard already.</span></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Dimension</th><th style="width:46px">Score</th><th>Note &amp; fix</th></tr>
+      <tr><td>Customer-voice hook</td><td><span class="sc s5">5</span></td><td>"Two regulatory clocks, one platform" is accurate (VeriFactu + Crea y Crece) and entirely customer-framed. Keep.</td></tr>
+      <tr><td>Tone discipline</td><td><span class="sc s5">5</span></td><td>The acknowledge-reset panel is the template the others should inherit.</td></tr>
+      <tr><td>Localisation</td><td><span class="sc s4">4</span></td><td>Correct <code>lang="es"</code>. Soften "en 2027 cada cliente" — Crea y Crece for small clients is ~2028; VeriFactu is the firmer 2027 anchor.</td></tr>
+      <tr><td>Design system</td><td><span class="sc s3">3</span></td><td>Bespoke <code>#00DC82</code>, not the Sage brand green. Re-token to brand.</td></tr>
+      <tr><td>Narrative</td><td><span class="sc s5">5</span></td><td>Full nine-section arc. Reference standard.</td></tr>
+      <tr><td>Naming</td><td><span class="sc s4">4</span></td><td>Apply the terminology lock end-to-end; confirm Spanish product names against the master list.</td></tr>
+      <tr><td>Proof &amp; trust</td><td><span class="sc s3">3</span></td><td>Surface VeriFactu certification status and a despachos customer voice above the fold.</td></tr>
+      <tr><td>CTA</td><td><span class="sc s5">5</span></td><td>Multiple specific, working CTAs. Keep.</td></tr>
+      <tr><td>Technical hygiene</td><td><span class="sc s4">4</span></td><td>Lightweight (~48 KB), <code>noindex</code> for review. Drop the English subtitles for production.</td></tr>
+      <tr><td>Replicability</td><td><span class="sc s4">4</span></td><td>Clean and parallel to PT — a strong base to extract the master template from.</td></tr>
+    </table>
+
+    <!-- PORTUGAL -->
+    <div class="scard" style="background:#F3EFFB;border-color:#D8CCF0">
+      <div class="tot s3">38<small>/ 50</small></div>
+      <div class="desc" style="flex:1"><b><span class="flagchip pt">PT</span> &nbsp;Portugal · Contabilistas</b><br><span>Structurally the cleanest to replicate — but the hook is borrowed from a country it doesn't fit.</span></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Dimension</th><th style="width:46px">Score</th><th>Note &amp; fix</th></tr>
+      <tr><td>Customer-voice hook</td><td><span class="sc s3">3</span></td><td><b>Core issue.</b> "Em 2027, cada um dos seus clientes muda a forma como fatura" is copied from FR/ES logic. Portugal has no B2B cliff — ATCUD/QR/SAF-T have been live since 2022–23. Re-ground (see §04).</td></tr>
+      <tr><td>Tone discipline</td><td><span class="sc s4">4</span></td><td>Add the acknowledge-reset panel that ES has and PT lacks.</td></tr>
+      <tr><td>Localisation</td><td><span class="sc s3">3</span></td><td>Correct <code>lang="pt"</code>, but the regulatory substance is mis-grounded. Anchor to QES-on-PDF (1 Jan 2027), monthly SAF-T and B2G CIUS-PT, framed as advisory opportunity.</td></tr>
+      <tr><td>Design system</td><td><span class="sc s3">3</span></td><td>Same bespoke green as ES. Re-token to brand.</td></tr>
+      <tr><td>Narrative</td><td><span class="sc s4">4</span></td><td>Seven sections vs ES's nine — restore the acknowledge-reset and compliance-depth panels.</td></tr>
+      <tr><td>Naming</td><td><span class="sc s4">4</span></td><td>Add the PT-specific locked terms (ATCUD, SAF-T, CIUS-PT) to the master list.</td></tr>
+      <tr><td>Proof &amp; trust</td><td><span class="sc s3">3</span></td><td>Lead with "already compliant by design" — a genuine PT strength worth surfacing.</td></tr>
+      <tr><td>CTA</td><td><span class="sc s5">5</span></td><td>Strong, working CTAs. Keep.</td></tr>
+      <tr><td>Technical hygiene</td><td><span class="sc s4">4</span></td><td>Clean (~44 KB). Drop English subtitles for production.</td></tr>
+      <tr><td>Replicability</td><td><span class="sc s5">5</span></td><td>Ironically the best structural base — tight, parallel, easy to fork.</td></tr>
+    </table>
+
+    <!-- FRANCE -->
+    <div class="scard" style="background:#E7F4FA;border-color:#BBDDEC">
+      <div class="tot s5">46<small>/ 50</small></div>
+      <div class="desc" style="flex:1"><b><span class="flagchip fr">FR</span> &nbsp;France · Experts-comptables</b><br><span>The approved gold standard — signed off by Diego &amp; Jeremy. The benchmark the other markets are measured against.</span></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Dimension</th><th style="width:46px">Score</th><th>Note</th></tr>
+      <tr><td>Customer-voice hook</td><td><span class="sc s5">5</span></td><td>"À partir de septembre 2026…" — the clearest, hardest clock of the three, framed entirely from the client's reality. The reference hook.</td></tr>
+      <tr><td>Tone discipline</td><td><span class="sc s5">5</span></td><td>Investment-led, customer-voice, acknowledge-not-apologise. The approved tone benchmark the others should inherit.</td></tr>
+      <tr><td>Localisation</td><td><span class="sc s5">5</span></td><td>French build with PA/PPF/AKAO used correctly and the Sept 2026/2027 dates accurate. (If the outer gate shell still carries <code>lang="en"</code>, that's a one-line packaging fix, not a content issue.)</td></tr>
+      <tr><td>Design system</td><td><span class="sc s4">4</span></td><td>A distinct, approved build for France. The only open item is the cross-market decision on whether to converge all markets on one brand-token set — not a France fault.</td></tr>
+      <tr><td>Narrative</td><td><span class="sc s5">5</span></td><td>Carries the canonical three-phase France strategy (SfA alongside GE / SfA embedded in GE / Sage Active vision) — the strategic backbone for every France document.</td></tr>
+      <tr><td>Naming</td><td><span class="sc s5">5</span></td><td>Terminology lock is native here: PA = <em class="i">Plateforme Agréée</em> (AKAO), PPF = <em class="i">Portail Public de Facturation</em>, SfA, GE, Sage Prévision. France is where the lock originated.</td></tr>
+      <tr><td>Proof &amp; trust</td><td><span class="sc s5">5</span></td><td>AKAO — the DGFiP-registered PA acquired Jan 2026 — is a best-in-class proof asset, surfaced prominently.</td></tr>
+      <tr><td>CTA</td><td><span class="sc s4">4</span></td><td>Strong within the build; a separate public-acquisition variant would expose them openly.</td></tr>
+      <tr><td>Technical hygiene</td><td><span class="sc s4">4</span></td><td>Gating and payload weight are correct and intentional for a confidential, approved preview. A public-acquisition variant would simply be open and lighter.</td></tr>
+      <tr><td>Replicability</td><td><span class="sc s4">4</span></td><td>As the approved benchmark it defines the standard others replicate toward; forking happens at the content/standard level rather than the bespoke gate wrapper.</td></tr>
+    </table>
+
+    <div class="call win">
+      <div class="ci">→</div>
+      <div><h4>The fast path</h4><p>France is the approved benchmark — leave it as is. The work sits with the others: keep <strong>Spain's</strong> strong arc and lead it with the dual-clock; <strong>re-ground Portugal's</strong> hook to its real regulatory reality. Bank the shared structure and the terminology lock as the master template, so every future market launches to the France standard fast.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="hooks">
+  <div class="wrap">
+    <div class="lead-no">04 — Re-grounding the hook</div>
+    <h2>Same wedge, three different truths</h2>
+    <p class="intro">The hook is sacred and the hook is local. Here is the accurate clock for each market, and the framing that fits it.</p>
+    <table class="tbl">
+      <tr><th>Market</th><th>The real clock</th><th>Hook framing</th></tr>
+      <tr><td><b>France</b><br><span style="color:var(--cyan)">Hard cliff</span></td><td>1 Sept 2026: receive-all + large/ETI issue &amp; e-report. 1 Sept 2027: SMEs &amp; micro issue. Via a PA into the PPF.</td><td><em class="i">"À partir de septembre 2026, la facturation de vos clients change."</em> A dated countdown. Readiness = the offer.</td></tr>
+      <tr><td><b>Spain</b><br><span style="color:var(--green-d)">Dual clock</span></td><td>VeriFactu (certified software) 2026–27; Crea y Crece B2B large firms ~2027, others ~2028.</td><td>Keep the existing <em class="i">"dos relojes, una plataforma"</em> — accurate and strong. Anchor the date to VeriFactu.</td></tr>
+      <tr><td><b>Portugal</b><br><span style="color:var(--violet)">Continuous</span></td><td>No B2B cliff. ATCUD + QR + monthly SAF-T live since 2022–23; QES-on-PDF 1 Jan 2027; SAF-T Accounting 2028.</td><td>Drop the "2027 cliff." Reframe: <em class="i">"A conformidade já mudou — esteja à frente do que aí vem."</em> Advisory opportunity, not a deadline scare.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap">
+    <div class="lead-no">05 — Terminology lock</div>
+    <h2>The words, fixed once</h2>
+    <p class="intro">A shared glossary every market page inherits verbatim. This is what stops "migration" creeping back in and PA/PPF being conflated.</p>
+    <table class="tbl">
+      <tr><th>Term</th><th>Use exactly as</th><th>Never</th></tr>
+      <tr><td>SfA</td><td>Sage for Accountants — lowercase <code>f</code></td><td>SFA, S.F.A.</td></tr>
+      <tr><td>GE</td><td>Génération Experts</td><td>"Generation Experts"</td></tr>
+      <tr><td>Sage Prévision</td><td>Always the full name</td><td>"Prevision", "the forecasting tool"</td></tr>
+      <tr><td>AKAO</td><td>DGFiP-registered PA, acquired by Sage Jan 2026</td><td>generic "our platform"</td></tr>
+      <tr><td>PA</td><td>Plateforme Agréée (Approved Platform — what AKAO is)</td><td>confusing PA with PPF</td></tr>
+      <tr><td>PPF</td><td>Portail Public de Facturation (the government directory/hub)</td><td>calling it "the platform"</td></tr>
+      <tr><td>VeriFactu</td><td>Spain — certified, tamper-evident billing software</td><td>conflating with Crea y Crece</td></tr>
+      <tr><td>Crea y Crece</td><td>Spain — Ley 18/2022, B2B e-invoicing exchange</td><td>"the Spanish mandate" (which one?)</td></tr>
+      <tr><td>ATCUD / SAF-T / CIUS-PT</td><td>Portugal — the layered post-issuance regime</td><td>implying a clearance mandate</td></tr>
+      <tr><td>Any change story</td><td>"readiness", "get ready", "ahead of"</td><td><b>"migration"</b> — banned</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="replicate">
+  <div class="wrap">
+    <div class="lead-no">06 — The replication system</div>
+    <h2>How to launch any market in days, not weeks</h2>
+    <p class="intro">The point of the rubric, the lock and the master template is speed without drift. This is the repeatable sequence for the next country — and the loop that keeps every page improving.</p>
+
+    <h3>The country-launch sequence</h3>
+    <ol class="steps">
+      <li><b>Fork the master template</b><span>One tokenised codebase (PT structure + ES content/tone, on the Sage brand system). Components, not bespoke markup.</span></li>
+      <li><b>Re-ground the regulatory clock</b><span>Establish the country's <em class="i">real</em> mandate and dates from primary sources. This is the only section that must be researched fresh every time — and the one most likely to be wrong if copied.</span></li>
+      <li><b>Localise properly</b><span>Language + correct <code>lang</code>, currency, date format, local regulator and product names, and the country's proof assets.</span></li>
+      <li><b>Apply the terminology lock</b><span>Inherit the master glossary verbatim; add country-specific locked terms.</span></li>
+      <li><b>Score against the rubric before launch</b><span>Target ≥ 45/50. Anything under 4 on hook, tone, localisation or terminology blocks the launch.</span></li>
+      <li><b>Ship open &amp; light, gate only for review</b><span>Public pages: no password, performance budget met, correct meta. Keep the gated build for stakeholder previews only.</span></li>
+      <li><b>Re-score quarterly &amp; feed wins back</b><span>Anything that lifts one market's score becomes a master-template upgrade every market inherits. That's the global iteration loop.</span></li>
+    </ol>
+
+    <div class="call key">
+      <div class="ci">★</div>
+      <div><h4>What "good" looks like at scale</h4><p>Any Sage market can stand up a new accountant page that is on-brand, correctly localised, regulatorily accurate and scores 45+ on the rubric — in days — because the structure, tone, terminology and design tokens are inherited, and only the local regulatory truth is built fresh.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>The Sage Accountant Web Playbook · WiSE programme · FR / ES / PT</span>
+    <span class="pill">Confidential · internal · not for distribution</span>
+  </div>
+</footer>
+</body>
+</html>
